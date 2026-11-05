@@ -1,0 +1,21 @@
+{
+  "textures": {
+    "particle": "minecraft:block/oak_planks",
+    "wood": "minecraft:block/oak_planks"
+  },
+  "elements": [
+    {
+      "name": "Wood Panels",
+      "from": [1, 1, 1],
+      "to": [15, 15, 15],
+      "faces": {
+        "down":  { "texture": "#wood", "uv": [1, 1, 15, 15] },
+        "up":    { "texture": "#wood", "uv": [1, 1, 15, 15] },
+        "north": { "texture": "#wood", "uv": [1, 1, 15, 15] },
+        "south": { "texture": "#wood", "uv": [1, 1, 15, 15] },
+        "west":  { "texture": "#wood", "uv": [1, 1, 15, 15] },
+        "east":  { "texture": "#wood", "uv": [1, 1, 15, 15] }
+      }
+    }
+  ]
+}

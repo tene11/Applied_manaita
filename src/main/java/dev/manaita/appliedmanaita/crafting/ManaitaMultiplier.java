@@ -1,0 +1,153 @@
+package dev.manaita.appliedmanaita.crafting;
+
+import java.lang.reflect.Field;
+
+import org.jetbrains.annotations.Nullable;
+
+import net.neoforged.fml.config.IConfigSpec;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.config.ModConfigs;
+
+import dev.manaita.appliedmanaita.AppliedManaita;
+
+/**
+ * ManaitaPlusGeneral の倍率(設定ファイル {@code config/manaita_plus_general-common.toml})を読み取る。
+ * <ul>
+ *     <li>{@code crafting_doubling_value}: 作業まな板の倍率 → まな板クラフトパターン(まな板分子組立機)</li>
+ *     <li>{@code furnace_doubling_value}: 調理まな板の倍率 → まな板加工パターンのかまどレシピ(まな板分子精錬機)</li>
+ *     <li>{@code brewing_doubling_value}: 醸造まな板の倍率 → まな板加工パターンの醸造レシピ(まな板分子醸造機)</li>
+ * </ul>
+ * ManaitaPlusGeneral のクラスには触らず、NeoForge が読み込んだ設定の値だけを見るので、まな板mod側の実装が変わっても壊れにくい。
+ * (設定の値が見つからないときだけ、念のため ManaitaPlusGeneral の設定クラスの値を見る)
+ * 設定ファイルを書き換えると NeoForge が読み直すので、ここでも1秒ごとに読み直す。
+ * <p>
+ * サーバーではサーバーの設定の値を使う。クライアント(画面・説明欄の表示)では、サーバーから送られた値があればそれを使う
+ * ({@code network/MultipliersPayload})。マルチプレイで手元の設定がサーバーと違っても、表示がずれないようにするため。
+ */
+public final class ManaitaMultiplier {
+
+    /** ManaitaPlusGeneral の mod ID */
+    public static final String MANAITA_MOD_ID = "manaita_plus_general";
+
+    /** 倍率の種類 */
+    public enum Kind {
+        /** 作業まな板(クラフト) */
+        CRAFTING("crafting_doubling_value", "tooltip.appliedmanaita.multiplier"),
+        /** 調理まな板(かまど) */
+        FURNACE("furnace_doubling_value", "tooltip.appliedmanaita.furnace_multiplier"),
+        /** 醸造まな板(醸造台) */
+        BREWING("brewing_doubling_value", "tooltip.appliedmanaita.brewing_multiplier");
+
+        private final String configKey;
+        private final String tooltipKey;
+
+        Kind(final String configKey, final String tooltipKey) {
+            this.configKey = configKey;
+            this.tooltipKey = tooltipKey;
+        }
+
+        /** 説明欄に出す倍率の行の翻訳キー(引数は倍率) */
+        public String tooltipKey() {
+            return this.tooltipKey;
+        }
+    }
+
+    /** 値が読めないときの倍率。ManaitaPlusGeneral 自身の初期値と同じにする */
+    private static final int DEFAULT = 64;
+
+    /** 読み直す間隔(ミリ秒)。CPUの計算中に何度も呼ばれるので、毎回は読まない */
+    private static final long CHECK_INTERVAL_MS = 1000;
+
+    private static long lastChecked = Long.MIN_VALUE;
+    private static final int[] values = {DEFAULT, DEFAULT, DEFAULT};
+    private static boolean warned = false;
+
+    /** サーバーから送られた値(クライアント側の表示用)。届いていなければ null */
+    @Nullable
+    private static int[] fromServer = null;
+
+    private ManaitaMultiplier() {
+    }
+
+    /**
+     * 今の倍率。
+     *
+     * @param clientSide クライアント側(表示用)で使うなら true。サーバーから送られた値があればそちらを使う
+     */
+    public static synchronized int get(final Kind kind, final boolean clientSide) {
+        if (clientSide && fromServer != null) {
+            return fromServer[kind.ordinal()];
+        }
+        reloadIfNeeded();
+        return values[kind.ordinal()];
+    }
+
+    /** サーバーで使っている値(クライアントへ送る用) */
+    public static synchronized int[] getServerValues() {
+        reloadIfNeeded();
+        return values.clone();
+    }
+
+    /** クライアント側: サーバーから送られた値を受け取る */
+    public static synchronized void setFromServer(final int crafting, final int furnace, final int brewing) {
+        fromServer = new int[]{Math.max(1, crafting), Math.max(1, furnace), Math.max(1, brewing)};
+    }
+
+    /** クライアント側: サーバーから抜けたら、送られた値を捨てる */
+    public static synchronized void clearFromServer() {
+        fromServer = null;
+    }
+
+    private static void reloadIfNeeded() {
+        final long now = System.currentTimeMillis();
+        if (lastChecked != Long.MIN_VALUE && now - lastChecked < CHECK_INTERVAL_MS) {
+            return;
+        }
+        lastChecked = now;
+        for (final Kind kind : Kind.values()) {
+            values[kind.ordinal()] = Math.max(1, read(kind));
+        }
+    }
+
+    private static int read(final Kind kind) {
+        // 1. NeoForge が読み込んだ ManaitaPlusGeneral の設定から
+        try {
+            for (final ModConfig config : ModConfigs.getModConfigs(MANAITA_MOD_ID)) {
+                final IConfigSpec.ILoadedConfig loaded = config.getLoadedConfig();
+                if (loaded == null) {
+                    continue;
+                }
+                final Object value = loaded.config().get(kind.configKey);
+                if (value instanceof Number number) {
+                    return clamp(number.longValue());
+                }
+            }
+        } catch (final RuntimeException e) {
+            warnOnce("ManaitaPlusGeneral の設定を読めませんでした", e);
+        }
+
+        // 2. 念のため、ManaitaPlusGeneral の設定クラスの値から
+        try {
+            final Class<?> configClass = Class.forName("github.com.gengyoubo.MPG.MPGConfig");
+            final Field field = configClass.getField(kind.configKey);
+            final Object value = field.get(null);
+            if (value instanceof Number number) {
+                return clamp(number.longValue());
+            }
+        } catch (final ReflectiveOperationException | RuntimeException | LinkageError e) {
+            warnOnce("ManaitaPlusGeneral の倍率が見つかりませんでした。初期値の " + DEFAULT + " 倍を使います", e);
+        }
+        return DEFAULT;
+    }
+
+    private static int clamp(final long value) {
+        return (int) Math.max(1, Math.min(Integer.MAX_VALUE, value));
+    }
+
+    private static void warnOnce(final String message, final Throwable e) {
+        if (!warned) {
+            warned = true;
+            AppliedManaita.LOGGER.warn(message, e);
+        }
+    }
+}

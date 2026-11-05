@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "children": {
+    "inner": {
+      "parent": "appliedmanaita:block/manaita_assembler_inner"
+    },
+    "frame": {
+      "parent": "ae2:block/molecular_assembler"
+    }
+  }
+}

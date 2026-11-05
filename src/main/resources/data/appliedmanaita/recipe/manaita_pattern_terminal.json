@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ae2:pattern_encoding_terminal"
+    },
+    {
+      "item": "manaita_plus_general:block_crafting_manaita"
+    }
+  ],
+  "result": {
+    "id": "appliedmanaita:manaita_pattern_terminal",
+    "count": 1
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "#mark"
+  },
+  "elements": [
+    {
+      "name": "Mark (between wood and glow)",
+      "from": [
+        0.75,
+        0.75,
+        0.75
+      ],
+      "to": [
+        15.25,
+        15.25,
+        15.25
+      ],
+      "faces": {
+        "down": {
+          "texture": "#mark",
+          "uv": [
+            0.75,
+            0.75,
+            15.25,
+            15.25
+          ]
+        },
+        "up": {
+          "texture": "#mark",
+          "uv": [
+            0.75,
+            0.75,
+            15.25,
+            15.25
+          ]
+        },
+        "north": {
+          "texture": "#mark",
+          "uv": [
+            0.75,
+            0.75,
+            15.25,
+            15.25
+          ]
+        },
+        "south": {
+          "texture": "#mark",
+          "uv": [
+            0.75,
+            0.75,
+            15.25,
+            15.25
+          ]
+        },
+        "west": {
+          "texture": "#mark",
+          "uv": [
+            0.75,
+            0.75,
+            15.25,
+            15.25
+          ]
+        },
+        "east": {
+          "texture": "#mark",
+          "uv": [
+            0.75,
+            0.75,
+            15.25,
+            15.25
+          ]
+        }
+      }
+    }
+  ]
+}

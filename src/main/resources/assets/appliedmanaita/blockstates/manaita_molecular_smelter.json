@@ -1,0 +1,27 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "ae2:block/molecular_assembler"
+      }
+    },
+    {
+      "apply": {
+        "model": "appliedmanaita:block/manaita_assembler_inner"
+      }
+    },
+    {
+      "apply": {
+        "model": "appliedmanaita:block/manaita_molecular_smelter_mark"
+      }
+    },
+    {
+      "when": {
+        "powered": "true"
+      },
+      "apply": {
+        "model": "appliedmanaita:block/manaita_assembler_lights"
+      }
+    }
+  ]
+}

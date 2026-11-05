@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "MAM"
+  ],
+  "key": {
+    "M": {
+      "item": "manaita_plus_general:block_furnace_manaita"
+    },
+    "A": {
+      "item": "ae2:molecular_assembler"
+    }
+  },
+  "result": {
+    "id": "appliedmanaita:manaita_molecular_smelter",
+    "count": 1
+  }
+}

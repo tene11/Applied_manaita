@@ -1,0 +1,13 @@
+{
+  "itemGroup.appliedmanaita": "Applied Manaita",
+  "block.appliedmanaita.manaita_assembler": "まな板分子組立機",
+  "block.appliedmanaita.manaita_molecular_smelter": "まな板分子精錬機",
+  "block.appliedmanaita.manaita_molecular_brewer": "まな板分子醸造機",
+  "item.appliedmanaita.manaita_pattern_terminal": "まな板パターンターミナル",
+  "item.appliedmanaita.manaita_crafting_pattern": "まな板クラフトパターン",
+  "item.appliedmanaita.manaita_processing_pattern": "まな板加工パターン",
+  "tooltip.appliedmanaita.multiplier": "まな板倍率: ×%s",
+  "tooltip.appliedmanaita.furnace_multiplier": "調理まな板倍率: ×%s",
+  "tooltip.appliedmanaita.brewing_multiplier": "醸造まな板倍率: ×%s",
+  "chat.appliedmanaita.pattern_terminal_offline": "MEネットワークの電力かチャンネルが足りないため使えません"
+}

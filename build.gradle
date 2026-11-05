@@ -1,0 +1,152 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+    id 'idea'
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = "${mod_id}-${minecraft_version}"
+}
+
+// Minecraft 1.21.1 は Java 21
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+repositories {
+    // AE2 と GuideME (Modrinth の Maven)
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Modrinth'
+                url = 'https://api.modrinth.com/maven'
+            }
+        }
+        filter {
+            includeGroup 'maven.modrinth'
+        }
+    }
+    // JEI
+    maven {
+        name = "Jared's maven"
+        url = 'https://maven.blamejared.com/'
+        content {
+            includeGroup 'mezz.jei'
+        }
+    }
+    // EMI
+    maven {
+        name = 'TerraformersMC'
+        url = 'https://maven.terraformersmc.com/'
+        content {
+            includeGroup 'dev.emi'
+        }
+    }
+}
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+// 開発環境で動かすときだけ使う依存(配布物の依存には含めない)
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+dependencies {
+    // AE2 (Applied Energistics 2) と、AE2 が使う GuideME
+    implementation "maven.modrinth:XxWD5pD3:${ae2_modrinth_version}"
+    implementation "maven.modrinth:Ck4E7v7R:${guideme_modrinth_version}"
+
+    // JEI / EMI 連携(どちらも任意。コンパイルには API だけ使う)
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
+
+    switch (project.runtime_itemlist_mod) {
+        case 'emi':
+            localRuntime "dev.emi:emi-neoforge:${emi_version}"
+            break
+        case 'jei':
+            localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+            break
+        case 'both':
+            localRuntime "dev.emi:emi-neoforge:${emi_version}"
+            localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+            break
+    }
+
+    // まな板mod (ManaitaPlusGeneral) は libs フォルダに置いた jar を開発環境で読み込む。
+    // このmodはまな板modのクラスを直接使わない(設定値を読むだけ)ので、コンパイルには要らない
+    localRuntime fileTree(dir: 'libs', include: '*.jar')
+}
+
+// src/main/templates の ${...} を gradle.properties の値で埋める
+var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            ae2_version_range      : ae2_version_range,
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from 'src/main/templates'
+    into 'build/generated/sources/modMetadata'
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// ライセンス文を jar に入れる
+tasks.named('jar', Jar).configure {
+    from('COPYING', 'COPYING.LESSER') {
+        into 'META-INF'
+    }
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}

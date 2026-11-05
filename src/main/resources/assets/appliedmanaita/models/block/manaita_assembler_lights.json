@@ -1,0 +1,102 @@
+{
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "ae2:block/molecular_assembler_lights",
+    "all": "ae2:block/molecular_assembler_lights"
+  },
+  "elements": [
+    {
+      "name": "Glow (between glass and wood)",
+      "from": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "to": [
+        15.5,
+        15.5,
+        15.5
+      ],
+      "faces": {
+        "down": {
+          "texture": "#all",
+          "uv": [
+            0.5,
+            0.5,
+            15.5,
+            15.5
+          ],
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          }
+        },
+        "up": {
+          "texture": "#all",
+          "uv": [
+            0.5,
+            0.5,
+            15.5,
+            15.5
+          ],
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          }
+        },
+        "north": {
+          "texture": "#all",
+          "uv": [
+            0.5,
+            0.5,
+            15.5,
+            15.5
+          ],
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          }
+        },
+        "south": {
+          "texture": "#all",
+          "uv": [
+            0.5,
+            0.5,
+            15.5,
+            15.5
+          ],
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          }
+        },
+        "west": {
+          "texture": "#all",
+          "uv": [
+            0.5,
+            0.5,
+            15.5,
+            15.5
+          ],
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          }
+        },
+        "east": {
+          "texture": "#all",
+          "uv": [
+            0.5,
+            0.5,
+            15.5,
+            15.5
+          ],
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15
+          }
+        }
+      }
+    }
+  ]
+}
