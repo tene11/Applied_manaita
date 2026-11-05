@@ -91,6 +91,19 @@ Changes apply immediately, even to patterns already in ME Interfaces.
 
 ---
 
+## クレジット / Credits
+- [Manaita Plus](https://www.curseforge.com/minecraft/mc-mods/manaita-plus) — リクト氏 / by Rikuto
+  このmodの土台になっている「倍化」と、その設定 / The doubling feature and config this addon is built on
+- [AE2 Unofficial Extended Life](https://github.com/AE2-UEL/Applied-Energistics-2) — The AE2:UEL team, AlgorithmX2 & contributors
+  まな板の機械とまな板パターンターミナルの見た目には、AE2 のモデル・テクスチャを実行時に読み込んで使っています
+  / Some AE2 models and textures are loaded from AE2 at runtime
+- [CleanroomMC TemplateDevEnv](https://github.com/CleanroomMC/TemplateDevEnv) — 開発環境のテンプレート / Development template (MIT)
+- [MixinBooter](https://github.com/CleanroomMC/MixinBooter) — Mixin の読み込み / Mixin loading
+
+### AI の使用について / AI usage
+このmodは、AIアシスタント(Anthropic の Claude)を使って開発しました。
+This mod was developed with the help of an AI assistant (Anthropic's Claude).
+
 ## License
 Applied Manaita is licensed under the [GNU Lesser General Public License v3.0](LICENSE).
 
