@@ -31,6 +31,18 @@ repositories {
             includeGroup 'maven.modrinth'
         }
     }
+    // CurseForge の mod (ManaitaPlusGeneral)
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'CurseMaven'
+                url = 'https://cursemaven.com'
+            }
+        }
+        filter {
+            includeGroup 'curse.maven'
+        }
+    }
     // JEI
     maven {
         name = "Jared's maven"
@@ -106,9 +118,15 @@ dependencies {
             break
     }
 
-    // まな板mod (ManaitaPlusGeneral) は libs フォルダに置いた jar を開発環境で読み込む。
+    // まな板mod (ManaitaPlusGeneral) と、それが必要とする Architectury API。開発環境で動かすときだけ使う。
     // このmodはまな板modのクラスを直接使わない(設定値を読むだけ)ので、コンパイルには要らない
-    localRuntime fileTree(dir: 'libs', include: '*.jar')
+    localRuntime "maven.modrinth:lhGA9TYQ:${architectury_modrinth_version}"
+    if (project.manaita_curse_file.trim()) {
+        localRuntime "curse.maven:manaita-plus-general-${manaita_curse_project}:${manaita_curse_file.trim()}"
+    } else {
+        // ファイルIDを書いていないときは、libs フォルダに置いた jar を使う
+        localRuntime fileTree(dir: 'libs', include: '*.jar')
+    }
 }
 
 // src/main/templates の ${...} を gradle.properties の値で埋める

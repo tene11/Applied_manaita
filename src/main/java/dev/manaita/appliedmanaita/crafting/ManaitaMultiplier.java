@@ -52,6 +52,12 @@ public final class ManaitaMultiplier {
         }
     }
 
+    /** ManaitaPlusGeneral の設定の値が入っているクラス(3.0 以降 / それより前) */
+    private static final String[] CONFIG_CLASSES = {
+            "github.com.gengyoubo.common.config.MPGConfigValues",
+            "github.com.gengyoubo.MPG.MPGConfig",
+    };
+
     /** 値が読めないときの倍率。ManaitaPlusGeneral 自身の初期値と同じにする */
     private static final int DEFAULT = 64;
 
@@ -126,17 +132,21 @@ public final class ManaitaMultiplier {
             warnOnce("ManaitaPlusGeneral の設定を読めませんでした", e);
         }
 
-        // 2. 念のため、ManaitaPlusGeneral の設定クラスの値から
-        try {
-            final Class<?> configClass = Class.forName("github.com.gengyoubo.MPG.MPGConfig");
-            final Field field = configClass.getField(kind.configKey);
-            final Object value = field.get(null);
-            if (value instanceof Number number) {
-                return clamp(number.longValue());
+        // 2. 念のため、ManaitaPlusGeneral の設定クラスの値から(3.0 以降と、それより前の置き場所)
+        Throwable failure = null;
+        for (final String className : CONFIG_CLASSES) {
+            try {
+                final Class<?> configClass = Class.forName(className);
+                final Field field = configClass.getField(kind.configKey);
+                final Object value = field.get(null);
+                if (value instanceof Number number) {
+                    return clamp(number.longValue());
+                }
+            } catch (final ReflectiveOperationException | RuntimeException | LinkageError e) {
+                failure = e;
             }
-        } catch (final ReflectiveOperationException | RuntimeException | LinkageError e) {
-            warnOnce("ManaitaPlusGeneral の倍率が見つかりませんでした。初期値の " + DEFAULT + " 倍を使います", e);
         }
+        warnOnce("ManaitaPlusGeneral の倍率が見つかりませんでした。初期値の " + DEFAULT + " 倍を使います", failure);
         return DEFAULT;
     }
 

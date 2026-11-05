@@ -53,7 +53,7 @@ An addon for Minecraft 1.21.1 (NeoForge) that connects ManaitaPlusGeneral with A
 設定を変えると、パターンプロバイダーに入れたままのパターンにもすぐ反映されます。
 
 ### 開発環境
-1. `libs` フォルダに ManaitaPlusGeneral (NeoForge 1.21.1 版) の jar を置きます。
+1. `gradle.properties` の `manaita_curse_file` に、CurseForge にある ManaitaPlusGeneral (NeoForge 1.21.1 版) のファイルIDを書きます(空のままなら、代わりに `libs` フォルダに置いた jar を使います)。必要な Architectury API は自動で入ります。
 2. `gradlew runClient` でゲームを起動できます。`gradlew build` で `build/libs` に jar ができます。
 3. 開発環境で動かすレシピ表示mod は `gradle.properties` の `runtime_itemlist_mod` で選べます(emi / jei / both / none)。
 
@@ -97,7 +97,7 @@ Read from ManaitaPlusGeneral's config `config/manaita_plus_general-common.toml`:
 Changes apply immediately, even to patterns already in Pattern Providers.
 
 ### Development
-1. Put the ManaitaPlusGeneral jar (NeoForge 1.21.1) into the `libs` folder.
+1. Set `manaita_curse_file` in `gradle.properties` to the CurseForge file ID of ManaitaPlusGeneral (NeoForge 1.21.1), or leave it empty and put the jar into the `libs` folder. Architectury API is added automatically.
 2. Run `gradlew runClient` to start the game, or `gradlew build` to build the jar into `build/libs`.
 3. Choose the recipe viewer for the dev environment with `runtime_itemlist_mod` in `gradle.properties` (emi / jei / both / none).
 
