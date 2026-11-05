@@ -24,7 +24,7 @@ public final class ClientSetup {
     private ClientSetup() {
     }
 
-    @EventBusSubscriber(modid = AppliedManaita.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = AppliedManaita.MOD_ID, value = Dist.CLIENT)
     public static final class ModBusEvents {
 
         private ModBusEvents() {
@@ -48,7 +48,7 @@ public final class ClientSetup {
         }
     }
 
-    @EventBusSubscriber(modid = AppliedManaita.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = AppliedManaita.MOD_ID, value = Dist.CLIENT)
     public static final class GameBusEvents {
 
         private GameBusEvents() {
