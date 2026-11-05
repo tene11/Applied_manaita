@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "appliedenergistics2:items/encoded_pattern",
+        "layer1": "appliedmanaita:items/manaita_pattern_overlay"
+    }
+}

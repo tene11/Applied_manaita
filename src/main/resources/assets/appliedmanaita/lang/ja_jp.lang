@@ -1,0 +1,11 @@
+itemGroup.appliedmanaita=Applied Manaita
+tile.appliedmanaita.manaita_assembler.name=まな板分子組立機
+item.appliedmanaita.manaita_pattern.name=まな板パターン
+tooltip.appliedmanaita.multiplier=まな板倍率: ×%s
+item.appliedmanaita.manaita_pattern_terminal.name=まな板パターンターミナル
+gui.appliedmanaita.speed_cards=加速カード: %s枚
+chat.appliedmanaita.pattern_terminal_offline=MEネットワークの電力かチャンネルが足りないため使えません
+tile.appliedmanaita.manaita_molecular_smelter.name=まな板分子精錬機
+tooltip.appliedmanaita.furnace_multiplier=調理まな板倍率: ×%s
+tile.appliedmanaita.manaita_molecular_brewer.name=まな板分子醸造機
+tooltip.appliedmanaita.brewing_multiplier=醸造まな板倍率: ×%s

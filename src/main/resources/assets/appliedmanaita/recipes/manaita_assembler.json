@@ -1,0 +1,11 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "MAM"
+    ],
+    "key": {
+        "M": { "item": "manaita_plus:tile.crafting_manaita", "data": 32767 },
+        "A": { "item": "appliedenergistics2:molecular_assembler" }
+    },
+    "result": { "item": "appliedmanaita:manaita_assembler" }
+}

@@ -1,0 +1,28 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "appliedenergistics2:molecular_assembler"
+    },
+    "variants": {
+        "powered": {
+            "false": {
+                "submodel": {
+                    "inner": { "model": "appliedmanaita:manaita_assembler_inner" }
+                }
+            },
+            "true": {
+                "submodel": {
+                    "inner": { "model": "appliedmanaita:manaita_assembler_inner" },
+                    "lights": { "model": "appliedmanaita:manaita_assembler_lights" }
+                }
+            }
+        },
+        "inventory": [
+            {
+                "submodel": {
+                    "inner": { "model": "appliedmanaita:manaita_assembler_inner" }
+                }
+            }
+        ]
+    }
+}

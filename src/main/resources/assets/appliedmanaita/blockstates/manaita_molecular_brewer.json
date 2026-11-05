@@ -1,0 +1,54 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "appliedenergistics2:molecular_assembler"
+    },
+    "variants": {
+        "powered": {
+            "false": {
+                "submodel": {
+                    "inner": {
+                        "model": "appliedmanaita:manaita_assembler_inner"
+                    },
+                    "mark": {
+                        "model": "appliedmanaita:manaita_mark",
+                        "textures": {
+                            "mark": "appliedmanaita:blocks/manaita_molecular_brewer_mark"
+                        }
+                    }
+                }
+            },
+            "true": {
+                "submodel": {
+                    "inner": {
+                        "model": "appliedmanaita:manaita_assembler_inner"
+                    },
+                    "mark": {
+                        "model": "appliedmanaita:manaita_mark",
+                        "textures": {
+                            "mark": "appliedmanaita:blocks/manaita_molecular_brewer_mark"
+                        }
+                    },
+                    "lights": {
+                        "model": "appliedmanaita:manaita_assembler_lights"
+                    }
+                }
+            }
+        },
+        "inventory": [
+            {
+                "submodel": {
+                    "inner": {
+                        "model": "appliedmanaita:manaita_assembler_inner"
+                    },
+                    "mark": {
+                        "model": "appliedmanaita:manaita_mark",
+                        "textures": {
+                            "mark": "appliedmanaita:blocks/manaita_molecular_brewer_mark"
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

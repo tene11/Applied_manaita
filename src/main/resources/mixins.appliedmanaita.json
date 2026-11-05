@@ -1,0 +1,19 @@
+{
+    "package": "dev.manaita.appliedmanaita.mixin",
+    "required": true,
+    "refmap": "mixins.appliedmanaita.refmap.json",
+    "target": "@env(DEFAULT)",
+    "minVersion": "0.8.5",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "MixinContainerPatternEncoder",
+        "MixinDualityInterface",
+        "MixinTileMolecularAssembler"
+    ],
+    "client": [
+        "MixinGuiPatternTerm"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

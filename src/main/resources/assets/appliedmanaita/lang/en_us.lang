@@ -1,0 +1,11 @@
+itemGroup.appliedmanaita=Applied Manaita
+tile.appliedmanaita.manaita_assembler.name=Manaita Molecular Assembler
+item.appliedmanaita.manaita_pattern.name=Manaita Pattern
+tooltip.appliedmanaita.multiplier=Manaita multiplier: x%s
+item.appliedmanaita.manaita_pattern_terminal.name=Manaita Pattern Terminal
+gui.appliedmanaita.speed_cards=Acceleration cards: %s
+chat.appliedmanaita.pattern_terminal_offline=Needs ME network power and a channel
+tile.appliedmanaita.manaita_molecular_smelter.name=Manaita Molecular Smelter
+tooltip.appliedmanaita.furnace_multiplier=Furnace manaita multiplier: x%s
+tile.appliedmanaita.manaita_molecular_brewer.name=Manaita Molecular Brewer
+tooltip.appliedmanaita.brewing_multiplier=Brewing manaita multiplier: x%s

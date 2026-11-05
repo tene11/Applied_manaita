@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "appliedenergistics2:part",
+            "data": 340
+        },
+        {
+            "item": "manaita_plus:tile.crafting_manaita",
+            "data": 32767
+        }
+    ],
+    "result": {
+        "item": "appliedmanaita:manaita_pattern_terminal"
+    }
+}
