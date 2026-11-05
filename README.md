@@ -1,5 +1,7 @@
 # Applied Manaita
 
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](COPYING.LESSER)
+
 [日本語](#日本語) | [English](#english)
 
 まな板+ (Manaita Plus) と AE2 Unofficial Extended Life を連動させる、Minecraft 1.12.2 用のアドオンです。
@@ -105,7 +107,8 @@ Changes apply immediately, even to patterns already in ME Interfaces.
 This mod was developed with the help of an AI assistant (Anthropic's Claude).
 
 ## License
-Applied Manaita is licensed under the [GNU Lesser General Public License v3.0](LICENSE).
+Applied Manaita は [GNU Lesser General Public License v3.0](COPYING.LESSER) で公開しています。LGPL は GPL に条件を足したライセンスなので、[GPL-3.0](COPYING) の本文も同梱しています。
+Applied Manaita is licensed under the [GNU Lesser General Public License v3.0](COPYING.LESSER), which supplements the [GNU General Public License v3.0](COPYING).
 
-- The build scripts are based on [CleanroomMC TemplateDevEnv](https://github.com/CleanroomMC/TemplateDevEnv) (MIT License, see [LICENSE-TemplateDevEnv](LICENSE-TemplateDevEnv)).
+- The build scripts are based on [CleanroomMC TemplateDevEnv](https://github.com/CleanroomMC/TemplateDevEnv) (MIT License, see [licenses/TemplateDevEnv-MIT.txt](licenses/TemplateDevEnv-MIT.txt)).
 - This mod does not include any code or assets from Manaita Plus or AE2. Some AE2 models and textures are loaded from AE2 at runtime.

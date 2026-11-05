@@ -3,3 +3,13 @@
 
 // If you wish to use the default helper methods, uncomment the line below
 // apply from: 'gradle/scripts/helpers.gradle'
+
+// ライセンス(LGPL-3.0 と、その元になる GPL-3.0)の本文を jar の中にも入れる
+jar {
+    from(rootProject.file('COPYING')) {
+        rename { 'LICENSE_appliedmanaita_GPL-3.0.txt' }
+    }
+    from(rootProject.file('COPYING.LESSER')) {
+        rename { 'LICENSE_appliedmanaita_LGPL-3.0.txt' }
+    }
+}
