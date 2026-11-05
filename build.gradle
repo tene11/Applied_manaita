@@ -126,6 +126,8 @@ var generateModMetadata = tasks.register('generateModMetadata', ProcessResources
             ae2_version_range      : ae2_version_range,
     ]
     inputs.properties replaceProperties
+    // Windows でも UTF-8 で読み書きする(日本語の説明文が文字化けして NeoForge が読めなくなるのを防ぐ)
+    filteringCharset = 'UTF-8'
     expand replaceProperties
     from 'src/main/templates'
     into 'build/generated/sources/modMetadata'
@@ -135,6 +137,10 @@ neoForge.ideSyncTask generateModMetadata
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+tasks.withType(ProcessResources).configureEach {
+    filteringCharset = 'UTF-8'
 }
 
 idea {
