@@ -137,13 +137,6 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-// ライセンス文を jar に入れる
-tasks.named('jar', Jar).configure {
-    from('COPYING', 'COPYING.LESSER') {
-        into 'META-INF'
-    }
-}
-
 idea {
     module {
         downloadSources = true
