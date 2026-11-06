@@ -120,11 +120,16 @@ dependencies {
 
     // まな板mod (ManaitaPlusGeneral) と、それが必要とする Architectury API。開発環境で動かすときだけ使う。
     // このmodはまな板modのクラスを直接使わない(設定値を読むだけ)ので、コンパイルには要らない
-    localRuntime "maven.modrinth:lhGA9TYQ:${architectury_modrinth_version}"
-    if (project.manaita_curse_file.trim()) {
+    // どれを動かすかは gradle.properties の runtime_manaita_mod で選ぶ
+    var manaitaMod = project.runtime_manaita_mod.trim()
+    if (manaitaMod == 'general' || manaitaMod == 'both') {
         localRuntime "curse.maven:manaita-plus-general-${manaita_curse_project}:${manaita_curse_file.trim()}"
+        localRuntime "maven.modrinth:lhGA9TYQ:${architectury_modrinth_version}"
     }
-    // libs フォルダに置いた jar も読み込む(ManaitaPlus Legacy を試すときなど)
+    if (manaitaMod == 'legacy' || manaitaMod == 'both') {
+        localRuntime "maven.modrinth:lTyodfFR:${legacy_modrinth_version}"
+    }
+    // libs フォルダに置いた jar も読み込む(ほかの mod を試すときなど)
     localRuntime fileTree(dir: 'libs', include: '*.jar')
 }
 
@@ -164,5 +169,14 @@ idea {
     module {
         downloadSources = true
         downloadJavadoc = true
+    }
+}
+
+// 開発環境で使う mod (まな板mod など)がダウンロードできるか確かめる(GitHub のビルドで使う)
+tasks.register('resolveRuntimeMods') {
+    var runtimeFiles = configurations.runtimeClasspath
+    inputs.files(runtimeFiles)
+    doLast {
+        println "runtimeClasspath: ${runtimeFiles.files.size()} files"
     }
 }

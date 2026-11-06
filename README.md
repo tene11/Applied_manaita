@@ -55,7 +55,7 @@ An addon for Minecraft 1.21.1 (NeoForge) that connects a Manaita mod (ManaitaPlu
 設定を変えると、パターンプロバイダーに入れたままのパターンにもすぐ反映されます。
 
 ### 開発環境
-1. `gradle.properties` の `manaita_curse_file` に、CurseForge にある ManaitaPlusGeneral (NeoForge 1.21.1 版) のファイルIDを書きます(`libs` フォルダに置いた jar も読み込むので、ManaitaPlus Legacy を試すときはそこに置きます。同じmodを両方に入れないでください)。必要な Architectury API は自動で入ります。
+1. 開発環境で動かすまな板mod は、`gradle.properties` の `runtime_manaita_mod` で選べます(general / legacy / both / none)。まな板mod と、それが必要とする Architectury API は自動で入ります。
 2. `gradlew runClient` でゲームを起動できます。`gradlew build` で `build/libs` に jar ができます。
 3. 開発環境で動かすレシピ表示mod は `gradle.properties` の `runtime_itemlist_mod` で選べます(emi / jei / both / none)。
 
@@ -101,7 +101,7 @@ Read from the Manaita mod's config (`config/manaita_plus_general-common.toml` or
 Changes apply immediately, even to patterns already in Pattern Providers.
 
 ### Development
-1. Set `manaita_curse_file` in `gradle.properties` to the CurseForge file ID of ManaitaPlusGeneral (NeoForge 1.21.1), Jars in the `libs` folder are also loaded (e.g. to try ManaitaPlus Legacy). Architectury API is added automatically.
+1. Choose the Manaita mod for the dev environment with `runtime_manaita_mod` in `gradle.properties` (general / legacy / both / none). The mods are downloaded automatically.
 2. Run `gradlew runClient` to start the game, or `gradlew build` to build the jar into `build/libs`.
 3. Choose the recipe viewer for the dev environment with `runtime_itemlist_mod` in `gradle.properties` (emi / jei / both / none).
 
