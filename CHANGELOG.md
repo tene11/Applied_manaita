@@ -2,8 +2,10 @@
 
 ## 1.0.0 (1.21.1 NeoForge)
 - 1.12.2 版をもとに、1.21.1 NeoForge 版を作成
-  - 前提mod: AE2 19.2 以降、ManaitaPlusGeneral
+  - 前提mod: AE2 19.2 以降と、まな板mod(ManaitaPlusGeneral / ManaitaPlus Legacy / manaitaPP のどれか)
   - まな板パターンは AE2 1.21.1 と同じく、クラフト用(まな板クラフトパターン)と加工用(まな板加工パターン)のアイテムに分かれる
   - MEインターフェースの役目は、1.21.1 の AE2 ではパターンプロバイダーが受け持つ
   - まな板mod は ManaitaPlusGeneral と ManaitaPlus Legacy のどちらにも対応(両方あるときは ManaitaPlusGeneral の倍率)。Legacy を使うときに Iris がなければ起動時に警告
-  - JEI / EMI に「作業場所」としてまな板の機械とまな板パターンターミナルを表示
+  - manaitaPP にも対応(倍率は 64 倍固定。General / Legacy があればそちらを優先)。MTK の作業まな板・かまどまな板をレシピに使える
+  - 醸造まな板がない環境(manaitaPP だけのとき)では、まな板分子醸造機のレシピを読み込まない
+  - JEI / EMI のどちらからでも、まな板パターンターミナル(と AE2 のパターンエンコーディングターミナル)へレシピを転送できる

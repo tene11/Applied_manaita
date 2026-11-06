@@ -21,7 +21,7 @@ import appeng.api.upgrades.Upgrades;
 import appeng.core.definitions.AEItems;
 
 /**
- * Applied Manaita : まな板mod (ManaitaPlusGeneral / ManaitaPlus Legacy) と AE2 を連動させるアドオン (1.21.1 NeoForge 版)
+ * Applied Manaita : まな板mod (ManaitaPlusGeneral / ManaitaPlus Legacy / manaitaPP) と AE2 を連動させるアドオン (1.21.1 NeoForge 版)
  */
 @Mod(AppliedManaita.MOD_ID)
 public final class AppliedManaita {
@@ -47,8 +47,8 @@ public final class AppliedManaita {
     /**
      * まな板mod が入っているか確かめる。
      * <ul>
-     *     <li>どちらも入っていない: 分かりやすいメッセージで起動を止める</li>
-     *     <li>ManaitaPlus Legacy を使う(ManaitaPlusGeneral がない)のに Iris がない: 起動時に警告を出す
+     *     <li>どれも入っていない: 分かりやすいメッセージで起動を止める</li>
+     *     <li>ManaitaPlus Legacy の倍率を使う(ManaitaPlusGeneral がない)のに Iris がない: 起動時に警告を出す
      *     (ManaitaPlus Legacy は Iris が必要とされているため)</li>
      * </ul>
      */

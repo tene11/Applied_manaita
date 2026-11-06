@@ -7,6 +7,10 @@
     {
       "id": "manaita_plus_legacy:block_crafting_manaita",
       "required": false
+    },
+    {
+      "id": "manaitapp:manaita_mtk",
+      "required": false
     }
   ]
 }

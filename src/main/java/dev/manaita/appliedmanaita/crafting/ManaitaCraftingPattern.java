@@ -22,7 +22,7 @@ import appeng.crafting.pattern.AECraftingPattern;
  * まな板クラフトパターンの中身(作業台レシピ)。まな板分子組立機 が受け取る。
  * <p>
  * 中身は AE2 のクラフトパターンと同じなので、代替素材・液体の代用・クラフト後に残るアイテムなども AE2 と同じに効く。
- * 出力は ManaitaPlusGeneral の作業まな板の倍率(crafting_doubling_value)倍。
+ * 出力はまな板mod の作業まな板の倍率(crafting_doubling_value)倍。
  * <p>
  * AE2 の {@link IMolecularAssemblerSupportedPattern} は付けていないので、普通の分子組立機は受け取らない
  * (クラフト用の処理は同じ名前のメソッドで持っていて、まな板分子組立機だけが使う)。
@@ -83,11 +83,6 @@ public final class ManaitaCraftingPattern implements IManaitaPattern {
     public synchronized List<GenericStack> getOutputs() {
         this.refresh();
         return this.outputs;
-    }
-
-    /** 1回分の完成品(倍率をかける前) */
-    public GenericStack getBaseOutput() {
-        return this.base.getPrimaryOutput();
     }
 
     @Override

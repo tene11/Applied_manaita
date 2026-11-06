@@ -158,7 +158,7 @@ public class ManaitaAssemblerBlockEntity extends AENetworkedInvBlockEntity
         return Math.min(this.upgrades.getInstalledUpgrades(AEItems.SPEED_CARD), SPEED.length - 1);
     }
 
-    /** 作業まな板の倍率(サーバー側の値) */
+    /** 作業まな板の倍率(クライアント側ではサーバーから送られた値) */
     public int getMultiplier() {
         return ManaitaMultiplier.get(ManaitaMultiplier.Kind.CRAFTING, this.isClientSide());
     }

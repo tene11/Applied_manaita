@@ -50,12 +50,9 @@ public final class ManaitaPatternConverter {
             } catch (final RuntimeException e) {
                 return encoded; // 中身が読めない
             }
-            EncodedProcessingPattern converted = null;
-            if (PatternUtil.isSmeltingPattern(base, level)) {
-                converted = processing;
-            } else {
-                converted = PatternUtil.toBrewingPattern(base, level);
-            }
+            final EncodedProcessingPattern converted = PatternUtil.isSmeltingPattern(base, level)
+                    ? processing
+                    : PatternUtil.toBrewingPattern(base, level);
             if (converted == null) {
                 return encoded; // かまどレシピでも醸造レシピでもない → 普通の加工パターン
             }

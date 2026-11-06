@@ -93,6 +93,10 @@ neoForge {
 // 開発環境で動かすときだけ使う依存(配布物の依存には含めない)
 configurations {
     runtimeClasspath.extendsFrom localRuntime
+    // run/mods フォルダにコピーして読ませる mod (Iris・Sodium)
+    runMods {
+        transitive = false
+    }
 }
 
 dependencies {
@@ -100,12 +104,12 @@ dependencies {
     implementation "maven.modrinth:XxWD5pD3:${ae2_modrinth_version}"
     implementation "maven.modrinth:Ck4E7v7R:${guideme_modrinth_version}"
 
-    // JEI / EMI 連携(どちらも任意。コンパイルには API だけ使う)
+    // JEI 連携(任意。コンパイルには API だけ使う)。EMI からの転送は AE2 本体の連携で動くので、EMI の API は使わない
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
 
-    switch (project.runtime_itemlist_mod) {
+    // 大文字・小文字は区別しない(JEI でも jei でもよい)
+    switch (project.runtime_itemlist_mod.trim().toLowerCase()) {
         case 'emi':
             localRuntime "dev.emi:emi-neoforge:${emi_version}"
             break
@@ -121,7 +125,7 @@ dependencies {
     // まな板mod (ManaitaPlusGeneral) と、それが必要とする Architectury API。開発環境で動かすときだけ使う。
     // このmodはまな板modのクラスを直接使わない(設定値を読むだけ)ので、コンパイルには要らない
     // どれを動かすかは gradle.properties の runtime_manaita_mod で選ぶ
-    var manaitaMod = project.runtime_manaita_mod.trim()
+    var manaitaMod = project.runtime_manaita_mod.trim().toLowerCase()
     if (manaitaMod == 'general' || manaitaMod == 'both') {
         localRuntime "curse.maven:manaita-plus-general-${manaita_curse_project}:${manaita_curse_file.trim()}"
         localRuntime "maven.modrinth:lhGA9TYQ:${architectury_modrinth_version}"
@@ -131,6 +135,12 @@ dependencies {
     }
     // 開発環境で使う便利mod
     localRuntime "maven.modrinth:aC3cM3Vq:${mousetweaks_modrinth_version}"
+    // Iris (ManaitaPlus Legacy が必要とする) と、Iris が必要とする Sodium。
+    // この2つはクラスパスに置くとうまく読み込まれないので、run/mods フォルダにコピーして普通の mod として読ませる(下の copyRunMods)
+    if (project.runtime_iris.trim().toLowerCase() == 'true') {
+        runMods "maven.modrinth:YL57xq9U:${iris_modrinth_version}"
+        runMods "maven.modrinth:AANobbMI:${sodium_modrinth_version}"
+    }
 
     // libs フォルダに置いた jar も読み込む(ほかの mod を試すときなど)
     localRuntime fileTree(dir: 'libs', include: '*.jar')
@@ -182,4 +192,19 @@ tasks.register('resolveRuntimeMods') {
     doLast {
         println "runtimeClasspath: ${runtimeFiles.files.size()} files"
     }
+}
+
+// runMods の mod を run/mods にコピーする(名前の頭に devmod- を付ける)。
+// 設定から外した mod は消えるが、自分で run/mods に置いた mod はそのまま残る
+var copyRunMods = tasks.register('copyRunMods', Sync) {
+    from configurations.runMods
+    into layout.projectDirectory.dir('run/mods')
+    rename { name -> "devmod-${name}" }
+    preserve {
+        include '**'
+        exclude 'devmod-*'
+    }
+}
+tasks.matching { it.name == 'runClient' || it.name == 'runServer' }.configureEach {
+    dependsOn copyRunMods
 }

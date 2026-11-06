@@ -4,8 +4,8 @@
 
 [日本語](#日本語) | [English](#english)
 
-まな板mod (ManaitaPlusGeneral / ManaitaPlus Legacy) と AE2 (Applied Energistics 2) を連動させる、Minecraft 1.21.1 (NeoForge) 用のアドオンです。
-An addon for Minecraft 1.21.1 (NeoForge) that connects a Manaita mod (ManaitaPlusGeneral / ManaitaPlus Legacy) with Applied Energistics 2.
+まな板mod (ManaitaPlusGeneral / ManaitaPlus Legacy / manaitaPP) と AE2 (Applied Energistics 2) を連動させる、Minecraft 1.21.1 (NeoForge) 用のアドオンです。
+An addon for Minecraft 1.21.1 (NeoForge) that connects a Manaita mod (ManaitaPlusGeneral / ManaitaPlus Legacy / manaitaPP) with Applied Energistics 2.
 
 ---
 
@@ -18,10 +18,11 @@ An addon for Minecraft 1.21.1 (NeoForge) that connects a Manaita mod (ManaitaPlu
 ### 必要なもの
 - Minecraft 1.21.1 + NeoForge
 - AE2 (Applied Energistics 2) 19.2 以降
-- まな板mod: ManaitaPlusGeneral か ManaitaPlus Legacy のどちらか (NeoForge 1.21.1 版)
-  - 両方入っているときは ManaitaPlusGeneral の倍率を使います
+- まな板mod: ManaitaPlusGeneral、ManaitaPlus Legacy、manaitaPP のどれか (NeoForge 1.21.1 版)
+  - 複数入っているときは ManaitaPlusGeneral → ManaitaPlus Legacy → manaitaPP の順で、先にあるものの倍率を使います
+  - manaitaPP には設定ファイルがないため、manaitaPP だけのときの倍率は 64 倍固定です。レシピには MTK のまな板を使います(manaitaPP には醸造まな板がないので、まな板分子醸造機は作れません)
   - ManaitaPlus Legacy には Iris が必要とされているため、Iris がないと起動時に警告が出ます
-- EMI / JEI(任意。EMI ならまな板パターンターミナルへのレシピ転送に使えます)
+- EMI / JEI(任意。どちらでもまな板パターンターミナルへのレシピ転送に使えます)
 
 ### 追加されるもの
 | 名前 | 説明 |
@@ -44,7 +45,7 @@ An addon for Minecraft 1.21.1 (NeoForge) that connects a Manaita mod (ManaitaPlu
 - まな板パターンを作業台に1個だけ置くと、元の AE2 のパターンに戻せます。
 
 ### 倍率の設定
-倍率はまな板mod の設定ファイルから読みます(ManaitaPlusGeneral: `config/manaita_plus_general-common.toml`、ManaitaPlus Legacy: `config/manaita_plus_legacy-common.toml`。設定の名前はどちらも同じ)。
+倍率はまな板mod の設定ファイルから読みます(ManaitaPlusGeneral: `config/manaita_plus_general-common.toml`、ManaitaPlus Legacy: `config/manaita_plus_legacy-common.toml`。設定の名前はどちらも同じ)。manaitaPP だけのときは 64 倍固定です。
 
 | 設定 | 使うもの |
 |---|---|
@@ -70,10 +71,11 @@ Recipes encoded as Manaita Patterns produce output multiplied by the ManaitaPlus
 ### Requirements
 - Minecraft 1.21.1 + NeoForge
 - AE2 (Applied Energistics 2) 19.2 or later
-- A Manaita mod: ManaitaPlusGeneral or ManaitaPlus Legacy (NeoForge 1.21.1)
-  - If both are installed, ManaitaPlusGeneral's multipliers are used
+- A Manaita mod: ManaitaPlusGeneral, ManaitaPlus Legacy or manaitaPP (NeoForge 1.21.1)
+  - If several are installed, the first of ManaitaPlusGeneral → ManaitaPlus Legacy → manaitaPP is used for multipliers
+  - manaitaPP has no config, so with manaitaPP alone all multipliers are fixed at 64x. Recipes use its MTK Manaita (manaitaPP has no brewing Manaita, so the Manaita Molecular Brewer cannot be crafted)
   - ManaitaPlus Legacy is said to need Iris; a warning is shown at startup if Iris is missing
-- EMI / JEI (optional; EMI can transfer recipes to the Manaita Pattern Terminal)
+- EMI / JEI (optional; either can transfer recipes to the Manaita Pattern Terminal)
 
 ### Contents
 | Name | Description |
@@ -97,7 +99,7 @@ Recipes encoded as Manaita Patterns produce output multiplied by the ManaitaPlus
 
 ### Multipliers
 Read from the Manaita mod's config (`config/manaita_plus_general-common.toml` or `config/manaita_plus_legacy-common.toml`):
-`crafting_doubling_value` (assembler), `furnace_doubling_value` (smelter), `brewing_doubling_value` (brewer).
+`crafting_doubling_value` (assembler), `furnace_doubling_value` (smelter), `brewing_doubling_value` (brewer). With manaitaPP alone they are fixed at 64x.
 Changes apply immediately, even to patterns already in Pattern Providers.
 
 ### Development
@@ -110,6 +112,7 @@ Changes apply immediately, even to patterns already in Pattern Providers.
 ## クレジット / Credits
 - [ManaitaPlusGeneral](https://www.curseforge.com/minecraft/mc-mods/manaita-plus-general) — RealSenPhent, gengyoubo (original Manaita Plus by Rikuto)
 - [ManaitaPlus Legacy](https://www.curseforge.com/minecraft/mc-mods/manaitaplus-legacy) — RealSenPhent (original Manaita Plus by Rikuto)
+- [manaitaPP](https://www.curseforge.com/minecraft/mc-mods/manaitapp) — takoyaki_3466
   このmodの土台になっている「倍化」と、その設定 / The doubling feature and config this addon is built on
 - [Applied Energistics 2](https://github.com/AppliedEnergistics/Applied-Energistics-2) — TeamAppliedEnergistics & contributors
   まな板の機械とまな板パターンターミナルの見た目・画面には、AE2 のモデル・テクスチャ・画面の配置を実行時に読み込んで使っています

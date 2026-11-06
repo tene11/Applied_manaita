@@ -42,3 +42,7 @@ repo/
 ### このプロジェクト ###
 # まな板mod など、ほかの人の mod の jar は入れない
 libs/*.jar
+
+# 作業用の置き場(リポジトリには入れない)
+Claude outputs/
+_to_delete/

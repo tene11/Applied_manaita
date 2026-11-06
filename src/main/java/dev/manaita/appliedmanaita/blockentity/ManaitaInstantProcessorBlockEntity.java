@@ -46,7 +46,7 @@ import dev.manaita.appliedmanaita.crafting.ManaitaProcessingPattern;
  * どちらのパターンを受け取るかは {@link #kind} で決まる。
  * <p>
  * プロバイダーから素材を受け取ると、燃料なしで一瞬で仕上げ、
- * ManaitaPlusGeneral の倍率をかけた数の完成品を ME ネットワークに直接入れる(CPU はそれを待っている)。
+ * まな板mod の倍率をかけた数の完成品を ME ネットワークに直接入れる(CPU はそれを待っている)。
  * <p>
  * 受け取ったその場ではネットワークに入れず、次のtickで入れる。
  * (AE2 の CPU は「機械に渡し終わってから」完成品を待つ登録をするので、渡している最中に入れると

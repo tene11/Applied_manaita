@@ -10,6 +10,6 @@
   "tooltip.appliedmanaita.furnace_multiplier": "調理まな板倍率: ×%s",
   "tooltip.appliedmanaita.brewing_multiplier": "醸造まな板倍率: ×%s",
   "chat.appliedmanaita.pattern_terminal_offline": "MEネットワークの電力かチャンネルが足りないため使えません",
-  "appliedmanaita.loading.no_manaita_mod": "Applied Manaita にはまな板mod が必要です。ManaitaPlusGeneral か ManaitaPlus Legacy を入れてください。",
+  "appliedmanaita.loading.no_manaita_mod": "Applied Manaita にはまな板mod が必要です。ManaitaPlusGeneral、ManaitaPlus Legacy、manaitaPP のどれかを入れてください。",
   "appliedmanaita.loading.legacy_needs_iris": "Applied Manaita: ManaitaPlus Legacy には Iris が必要とされていますが、Iris が入っていません。正しく動かないことがあります。"
 }

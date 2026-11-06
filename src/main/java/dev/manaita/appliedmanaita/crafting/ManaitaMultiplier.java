@@ -12,12 +12,13 @@ import net.neoforged.fml.config.ModConfigs;
 import dev.manaita.appliedmanaita.AppliedManaita;
 
 /**
- * まな板mod の倍率を読み取る。対応しているまな板mod は次の2つで、両方入っているときは ManaitaPlusGeneral を使う。
+ * まな板mod の倍率を読み取る。対応しているまな板mod は次の3つで、複数入っているときは上にあるものを使う。
  * <ul>
  *     <li>ManaitaPlusGeneral: 設定ファイル {@code config/manaita_plus_general-common.toml}</li>
  *     <li>ManaitaPlus Legacy: 設定ファイル {@code config/manaita_plus_legacy-common.toml}</li>
+ *     <li>manaitaPP: 設定ファイルがないので、倍率は3種類とも {@value #PP_MULTIPLIER} 倍で固定(MTKのまな板と同じ)</li>
  * </ul>
- * どちらも設定の名前は同じ:
+ * ManaitaPlusGeneral と ManaitaPlus Legacy は設定の名前が同じ:
  * <ul>
  *     <li>{@code crafting_doubling_value}: 作業まな板の倍率 → まな板クラフトパターン(まな板分子組立機)</li>
  *     <li>{@code furnace_doubling_value}: 調理まな板の倍率 → まな板加工パターンのかまどレシピ(まな板分子精錬機)</li>
@@ -36,6 +37,11 @@ public final class ManaitaMultiplier {
     public static final String GENERAL_MOD_ID = "manaita_plus_general";
     /** ManaitaPlus Legacy の mod ID */
     public static final String LEGACY_MOD_ID = "manaita_plus_legacy";
+    /** manaitaPP の mod ID */
+    public static final String PP_MOD_ID = "manaitapp";
+
+    /** manaitaPP だけのときの倍率(MTKのまな板の倍率) */
+    public static final int PP_MULTIPLIER = 64;
 
     /** 倍率の種類 */
     public enum Kind {
@@ -127,7 +133,7 @@ public final class ManaitaMultiplier {
         }
     }
 
-    /** 倍率を読むまな板mod の mod ID(両方入っていれば ManaitaPlusGeneral)。どちらもなければ null */
+    /** 倍率を読むまな板mod の mod ID(優先順: ManaitaPlusGeneral → ManaitaPlus Legacy → manaitaPP)。どれもなければ null */
     @Nullable
     public static String getActiveModId() {
         final ModList mods = ModList.get();
@@ -140,6 +146,9 @@ public final class ManaitaMultiplier {
         if (mods.isLoaded(LEGACY_MOD_ID)) {
             return LEGACY_MOD_ID;
         }
+        if (mods.isLoaded(PP_MOD_ID)) {
+            return PP_MOD_ID;
+        }
         return null;
     }
 
@@ -147,6 +156,10 @@ public final class ManaitaMultiplier {
         final String modId = getActiveModId();
         if (modId == null) {
             return DEFAULT;
+        }
+        if (PP_MOD_ID.equals(modId)) {
+            // manaitaPP には設定ファイルがないので固定
+            return PP_MULTIPLIER;
         }
         // 1. NeoForge が読み込んだまな板mod の設定から
         try {

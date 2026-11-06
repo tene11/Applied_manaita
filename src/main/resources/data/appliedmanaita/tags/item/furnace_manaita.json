@@ -7,6 +7,10 @@
     {
       "id": "manaita_plus_legacy:block_furnace_manaita",
       "required": false
+    },
+    {
+      "id": "manaitapp:manaita_furnace_mtk",
+      "required": false
     }
   ]
 }
