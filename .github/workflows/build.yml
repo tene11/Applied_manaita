@@ -32,6 +32,31 @@ jobs:
         if: success() || failure()
         run: ./gradlew resolveRuntimeMods -Pruntime_manaita_mod=all --stacktrace
 
+      - name: Inspect jar
+        run: |
+          JAR=$(ls build/libs/*.jar | head -1)
+          echo "== $JAR"
+          unzip -p "$JAR" META-INF/MANIFEST.MF
+          unzip -p "$JAR" META-INF/mods.toml | head -20
+          unzip -l "$JAR" | grep -E "mixin|mods.toml" || true
+
+      # 専用サーバーを起動して、Mixin・登録・まな板mod の読み込みでエラーが出ないか確かめる(起動したら止める)
+      - name: Smoke test (dedicated server)
+        run: |
+          mkdir -p run
+          echo "eula=true" > run/eula.txt
+          printf 'online-mode=false\nlevel-type=minecraft\\:flat\n' > run/server.properties
+          ./gradlew runServer -Pruntime_manaita_mod=all > server.log 2>&1 &
+          started=false
+          for i in $(seq 1 180); do
+            if grep -q 'Done (' server.log; then started=true; break; fi
+            if grep -qE 'Crash report saved|BUILD FAILED|FAILURE:' server.log; then break; fi
+            sleep 5
+          done
+          pkill -f 'runServer|forge' || true
+          grep -E "\[Applied Manaita\]|appliedmanaita|Mixin apply|InvalidInjection|Exception|ERROR|Done \(" server.log | grep -v "DEBUG" | head -80 || true
+          if [ "$started" != true ]; then tail -80 server.log; exit 1; fi
+
       - name: Upload jar
         if: success()
         uses: actions/upload-artifact@v4
