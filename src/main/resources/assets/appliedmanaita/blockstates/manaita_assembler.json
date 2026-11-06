@@ -1,0 +1,22 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "appliedmanaita:block/manaita_frame"
+      }
+    },
+    {
+      "apply": {
+        "model": "appliedmanaita:block/manaita_assembler_inner"
+      }
+    },
+    {
+      "when": {
+        "powered": "true"
+      },
+      "apply": {
+        "model": "appliedmanaita:block/manaita_assembler_lights"
+      }
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+### Gradle ###
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/**/build/
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/**/out/
+
+.run/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.eclipse/
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/**/bin/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Minecraft Modding ###
+run/
+!**/src/**/run/
+**/src/generated/**/.cache/
+repo/
+!**/src/**/repo/
+
+### このプロジェクト ###
+# まな板mod など、ほかの人の mod の jar は入れない
+libs/*.jar
+
+# 作業用の置き場(リポジトリには入れない)
+Claude outputs/
+_to_delete/
+
+### Forge MDK の付属ファイル(リポジトリには入れない)
+changelog.txt
+CREDITS.txt
+LICENSE.txt
+README.txt
+run-data/

@@ -1,0 +1,6 @@
+{
+  "parent": "appliedmanaita:block/manaita_mark",
+  "textures": {
+    "mark": "appliedmanaita:block/manaita_molecular_smelter_mark"
+  }
+}

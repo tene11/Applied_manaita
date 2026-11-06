@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.manaita.appliedmanaita.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "PatternEncodingLogicMixin",
+    "PatternEncodingTermMenuMixin",
+    "PatternProviderLogicMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

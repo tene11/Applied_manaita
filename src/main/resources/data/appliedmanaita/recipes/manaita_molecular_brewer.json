@@ -1,0 +1,28 @@
+{
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "appliedmanaita:brewing_manaita"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "MAM"
+  ],
+  "key": {
+    "M": {
+      "tag": "appliedmanaita:brewing_manaita"
+    },
+    "A": {
+      "item": "ae2:molecular_assembler"
+    }
+  },
+  "result": {
+    "item": "appliedmanaita:manaita_molecular_brewer",
+    "count": 1
+  }
+}

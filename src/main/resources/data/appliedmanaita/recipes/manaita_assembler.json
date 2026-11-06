@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "MAM"
+  ],
+  "key": {
+    "M": {
+      "tag": "appliedmanaita:crafting_manaita"
+    },
+    "A": {
+      "item": "ae2:molecular_assembler"
+    }
+  },
+  "result": {
+    "item": "appliedmanaita:manaita_assembler",
+    "count": 1
+  }
+}

@@ -1,0 +1,40 @@
+name: Build (1.20.1 Forge)
+
+on:
+  push:
+    branches:
+      - forge-1.20.1
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build
+        run: |
+          chmod +x gradlew
+          ./gradlew build --stacktrace
+
+      - name: Check runtime mods (ManaitaPlusGeneral / ManaitaPlus Legacy / ManaitaMTK)
+        if: success() || failure()
+        run: ./gradlew resolveRuntimeMods -Pruntime_manaita_mod=all --stacktrace
+
+      - name: Upload jar
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: appliedmanaita-1.20.1
+          path: build/libs/*.jar

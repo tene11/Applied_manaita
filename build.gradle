@@ -1,0 +1,209 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = "${mod_id}-${minecraft_version}"
+}
+
+// Minecraft 1.20.1 は Java 17
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: mapping_channel, version: mapping_version
+
+    // IDE から起動するときも、resources の ${...} を埋めたものを使う
+    copyIdeResources = true
+
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            // AE2 などの Mixin が、開発環境の名前で動くようにする
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            // このmodの Mixin を読み込む(配布する jar では MANIFEST.MF の MixinConfigs で読み込む)
+            args '-mixin.config=appliedmanaita.mixins.json'
+
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {
+        }
+
+        server {
+            args '--nogui'
+        }
+    }
+}
+
+repositories {
+    // AE2 と JEI
+    maven {
+        name = 'ModMaven'
+        url = 'https://modmaven.dev/'
+        content {
+            includeGroup 'appeng'
+            includeGroup 'mezz.jei'
+        }
+    }
+    // Modrinth の mod (ManaitaPlus Legacy・ManaitaMTK・Architectury API)
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Modrinth'
+                url = 'https://api.modrinth.com/maven'
+            }
+        }
+        forRepositories(fg.repository)
+        filter {
+            includeGroup 'maven.modrinth'
+        }
+    }
+    // CurseForge の mod (ManaitaPlusGeneral)
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'CurseMaven'
+                url = 'https://cursemaven.com'
+            }
+        }
+        forRepositories(fg.repository)
+        filter {
+            includeGroup 'curse.maven'
+        }
+    }
+    // EMI
+    maven {
+        name = 'TerraformersMC'
+        url = 'https://maven.terraformersmc.com/'
+        content {
+            includeGroup 'dev.emi'
+        }
+    }
+    // GuideME (AE2 が必要とする)
+    mavenCentral()
+    // libs フォルダに置いた jar (下の "local-libs")
+    flatDir {
+        name = 'local-libs'
+        dirs 'libs'
+        content {
+            includeGroup 'local-libs'
+        }
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    // AE2 (Applied Energistics 2) と、AE2 が必要とする GuideME
+    implementation fg.deobf("appeng:appliedenergistics2-forge:${ae2_version}") {
+        transitive = false
+    }
+    runtimeOnly fg.deobf("org.appliedenergistics:guideme:${guideme_version}") {
+        transitive = false
+    }
+
+    // レシピ表示mod。レシピの転送は AE2 本体の連携で動くので、このmod はレシピ表示mod のクラスを使わない
+    // 大文字・小文字は区別しない(JEI でも jei でもよい)
+    switch (project.runtime_itemlist_mod.trim().toLowerCase()) {
+        case 'emi':
+            runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
+            break
+        case 'jei':
+            runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+            break
+        case 'both':
+            runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
+            runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+            break
+    }
+
+    // まな板mod。開発環境で動かすときだけ使う。
+    // このmodはまな板mod のクラスを直接使わない(設定値を読むだけ)ので、コンパイルには要らない
+    // どれを動かすかは gradle.properties の runtime_manaita_mod で選ぶ
+    var manaitaMods = project.runtime_manaita_mod.toLowerCase().split(',').collect { it.trim() }
+    var useAll = manaitaMods.contains('all')
+    if (useAll || manaitaMods.contains('general')) {
+        runtimeOnly fg.deobf("curse.maven:manaita-plus-general-${manaita_curse_project}:${manaita_curse_file.trim()}")
+        // ManaitaPlusGeneral が必要とする Architectury API
+        runtimeOnly fg.deobf("maven.modrinth:architectury-api:${architectury_modrinth_version}")
+    }
+    if (useAll || manaitaMods.contains('legacy')) {
+        runtimeOnly fg.deobf("maven.modrinth:manaitaplus-legacy:${legacy_modrinth_version}")
+    }
+    if (useAll || manaitaMods.contains('mtk')) {
+        runtimeOnly fg.deobf("maven.modrinth:manaitamtk:${mtk_modrinth_version}")
+    }
+
+    // libs フォルダに置いた jar も読み込む(ほかの mod を試すときなど)
+    for (jarFile in fileTree(dir: 'libs', include: '*.jar')) {
+        var name = jarFile.name.take(jarFile.name.length() - '.jar'.length())
+        runtimeOnly fg.deobf("local-libs:${name}:0")
+    }
+}
+
+// mods.toml の ${...} を gradle.properties の値で埋める
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            forge_version          : forge_version,
+            forge_version_range    : forge_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            ae2_version_range      : ae2_version_range,
+    ]
+    inputs.properties replaceProperties
+    // Windows でも UTF-8 で読み書きする(日本語の説明文が文字化けしないように)
+    filteringCharset = 'UTF-8'
+    filesMatching(['META-INF/mods.toml']) {
+        expand replaceProperties
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : mod_authors,
+                'Specification-Version'   : '1',
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : mod_authors,
+                // このmodの Mixin を Forge に読み込ませる
+                'MixinConfigs'            : 'appliedmanaita.mixins.json',
+        ])
+    }
+    // 配布用に、Minecraft の名前を本番の名前に戻す
+    finalizedBy 'reobfJar'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// 開発環境で使う mod (まな板mod など)がダウンロードできるか確かめる(GitHub のビルドで使う)
+tasks.register('resolveRuntimeMods') {
+    var runtimeFiles = configurations.runtimeClasspath
+    inputs.files(runtimeFiles)
+    doLast {
+        println "runtimeClasspath: ${runtimeFiles.files.size()} files"
+    }
+}

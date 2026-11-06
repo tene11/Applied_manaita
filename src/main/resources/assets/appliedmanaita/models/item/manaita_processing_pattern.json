@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ae2:item/processing_pattern",
+    "layer1": "appliedmanaita:item/manaita_pattern_overlay"
+  }
+}

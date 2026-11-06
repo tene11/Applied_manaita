@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "manaita_plus_general:block_crafting_manaita",
+      "required": false
+    },
+    {
+      "id": "manaita_plus_legacy:block_crafting_manaita",
+      "required": false
+    },
+    {
+      "id": "manaitamtk:mtk_crafting_table",
+      "required": false
+    }
+  ]
+}

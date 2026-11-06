@@ -1,0 +1,23 @@
+{
+  "includes": [
+    "../molecular_assembler.json"
+  ],
+  "text": {
+    "dialog_title": {
+      "text": {
+        "translate": "block.appliedmanaita.manaita_assembler"
+      },
+      "position": {
+        "left": 8,
+        "top": 6
+      }
+    },
+    "multiplier": {
+      "text": "",
+      "position": {
+        "left": 126,
+        "top": 68
+      }
+    }
+  }
+}

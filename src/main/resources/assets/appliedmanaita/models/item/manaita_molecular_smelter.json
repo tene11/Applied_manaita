@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "children": {
+    "inner": {
+      "parent": "appliedmanaita:block/manaita_assembler_inner"
+    },
+    "mark": {
+      "parent": "appliedmanaita:block/manaita_molecular_smelter_mark"
+    },
+    "frame": {
+      "parent": "appliedmanaita:block/manaita_frame"
+    }
+  }
+}

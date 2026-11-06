@@ -1,0 +1,13 @@
+{
+  "itemGroup.appliedmanaita": "Applied Manaita",
+  "block.appliedmanaita.manaita_assembler": "Manaita Molecular Assembler",
+  "block.appliedmanaita.manaita_molecular_smelter": "Manaita Molecular Smelter",
+  "block.appliedmanaita.manaita_molecular_brewer": "Manaita Molecular Brewer",
+  "item.appliedmanaita.manaita_pattern_terminal": "Manaita Pattern Terminal",
+  "item.appliedmanaita.manaita_crafting_pattern": "Manaita Crafting Pattern",
+  "item.appliedmanaita.manaita_processing_pattern": "Manaita Processing Pattern",
+  "tooltip.appliedmanaita.multiplier": "Manaita multiplier: x%s",
+  "tooltip.appliedmanaita.furnace_multiplier": "Furnace manaita multiplier: x%s",
+  "tooltip.appliedmanaita.brewing_multiplier": "Brewing manaita multiplier: x%s",
+  "chat.appliedmanaita.pattern_terminal_offline": "Needs ME network power and a channel"
+}
