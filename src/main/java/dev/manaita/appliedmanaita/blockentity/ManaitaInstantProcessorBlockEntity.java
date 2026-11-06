@@ -214,7 +214,7 @@ public class ManaitaInstantProcessorBlockEntity extends AENetworkBlockEntity
 
     @Override
     public TickingRequest getTickingRequest(final IGridNode node) {
-        return new TickingRequest(1, 1, this.pending.isEmpty());
+        return new TickingRequest(1, 1, this.pending.isEmpty(), false);
     }
 
     @Override

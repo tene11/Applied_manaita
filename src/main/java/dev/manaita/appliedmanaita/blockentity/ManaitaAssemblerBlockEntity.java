@@ -254,7 +254,7 @@ public class ManaitaAssemblerBlockEntity extends AENetworkInvBlockEntity
     public TickingRequest getTickingRequest(final IGridNode node) {
         // AE2 の分子組立機と同じく毎tick呼んでもらう
         // (間隔を空けると、まとめて何tick分も進んでゲージが飛び、一瞬で完成したように見える)
-        return new TickingRequest(1, 1, !this.hasWork());
+        return new TickingRequest(1, 1, !this.hasWork(), false);
     }
 
     @Override
