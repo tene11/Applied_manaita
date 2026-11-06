@@ -129,6 +129,9 @@ dependencies {
     if (manaitaMod == 'legacy' || manaitaMod == 'both') {
         localRuntime "maven.modrinth:lTyodfFR:${legacy_modrinth_version}"
     }
+    // 開発環境で使う便利mod
+    localRuntime "maven.modrinth:aC3cM3Vq:${mousetweaks_modrinth_version}"
+
     // libs フォルダに置いた jar も読み込む(ほかの mod を試すときなど)
     localRuntime fileTree(dir: 'libs', include: '*.jar')
 }
