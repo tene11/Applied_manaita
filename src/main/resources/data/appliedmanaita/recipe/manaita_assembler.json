@@ -6,7 +6,7 @@
   ],
   "key": {
     "M": {
-      "item": "manaita_plus_general:block_crafting_manaita"
+      "tag": "appliedmanaita:crafting_manaita"
     },
     "A": {
       "item": "ae2:molecular_assembler"

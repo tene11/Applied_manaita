@@ -10,8 +10,8 @@ displayName="${mod_name}"
 authors="${mod_authors}"
 displayURL="https://github.com/tene11/Applied_manaita"
 description='''
-ManaitaPlusGeneral の「倍化」を AE2 の自動クラフトで使えるようにするアドオンです。
-Brings ManaitaPlusGeneral "doubling" to AE2 autocrafting.
+まな板mod (ManaitaPlusGeneral / ManaitaPlus Legacy) の「倍化」を AE2 の自動クラフトで使えるようにするアドオンです。
+Brings Manaita mod (ManaitaPlusGeneral / ManaitaPlus Legacy) "doubling" to AE2 autocrafting.
 '''
 
 [[mixins]]
@@ -38,9 +38,17 @@ config="${mod_id}.mixins.json"
     ordering="AFTER"
     side="BOTH"
 
+# まな板mod はどちらか一方が必要(どちらもないときは、このmodが起動時にメッセージを出して止める)
 [[dependencies.${mod_id}]]
     modId="manaita_plus_general"
-    type="required"
+    type="optional"
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="manaita_plus_legacy"
+    type="optional"
     versionRange="[0,)"
     ordering="AFTER"
     side="BOTH"

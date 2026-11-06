@@ -123,10 +123,9 @@ dependencies {
     localRuntime "maven.modrinth:lhGA9TYQ:${architectury_modrinth_version}"
     if (project.manaita_curse_file.trim()) {
         localRuntime "curse.maven:manaita-plus-general-${manaita_curse_project}:${manaita_curse_file.trim()}"
-    } else {
-        // ファイルIDを書いていないときは、libs フォルダに置いた jar を使う
-        localRuntime fileTree(dir: 'libs', include: '*.jar')
     }
+    // libs フォルダに置いた jar も読み込む(ManaitaPlus Legacy を試すときなど)
+    localRuntime fileTree(dir: 'libs', include: '*.jar')
 }
 
 // src/main/templates の ${...} を gradle.properties の値で埋める

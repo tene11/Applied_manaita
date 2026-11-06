@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.config.IConfigSpec;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.config.ModConfigs;
@@ -11,7 +12,12 @@ import net.neoforged.fml.config.ModConfigs;
 import dev.manaita.appliedmanaita.AppliedManaita;
 
 /**
- * ManaitaPlusGeneral の倍率(設定ファイル {@code config/manaita_plus_general-common.toml})を読み取る。
+ * まな板mod の倍率を読み取る。対応しているまな板mod は次の2つで、両方入っているときは ManaitaPlusGeneral を使う。
+ * <ul>
+ *     <li>ManaitaPlusGeneral: 設定ファイル {@code config/manaita_plus_general-common.toml}</li>
+ *     <li>ManaitaPlus Legacy: 設定ファイル {@code config/manaita_plus_legacy-common.toml}</li>
+ * </ul>
+ * どちらも設定の名前は同じ:
  * <ul>
  *     <li>{@code crafting_doubling_value}: 作業まな板の倍率 → まな板クラフトパターン(まな板分子組立機)</li>
  *     <li>{@code furnace_doubling_value}: 調理まな板の倍率 → まな板加工パターンのかまどレシピ(まな板分子精錬機)</li>
@@ -27,7 +33,9 @@ import dev.manaita.appliedmanaita.AppliedManaita;
 public final class ManaitaMultiplier {
 
     /** ManaitaPlusGeneral の mod ID */
-    public static final String MANAITA_MOD_ID = "manaita_plus_general";
+    public static final String GENERAL_MOD_ID = "manaita_plus_general";
+    /** ManaitaPlus Legacy の mod ID */
+    public static final String LEGACY_MOD_ID = "manaita_plus_legacy";
 
     /** 倍率の種類 */
     public enum Kind {
@@ -53,9 +61,13 @@ public final class ManaitaMultiplier {
     }
 
     /** ManaitaPlusGeneral の設定の値が入っているクラス(3.0 以降 / それより前) */
-    private static final String[] CONFIG_CLASSES = {
+    private static final String[] GENERAL_CONFIG_CLASSES = {
             "github.com.gengyoubo.common.config.MPGConfigValues",
             "github.com.gengyoubo.MPG.MPGConfig",
+    };
+    /** ManaitaPlus Legacy の設定の値が入っているクラス */
+    private static final String[] LEGACY_CONFIG_CLASSES = {
+            "sen.manaita_plus_legacy.common.config.ManaitaPlusLegacyConfig",
     };
 
     /** 値が読めないときの倍率。ManaitaPlusGeneral 自身の初期値と同じにする */
@@ -115,10 +127,30 @@ public final class ManaitaMultiplier {
         }
     }
 
+    /** 倍率を読むまな板mod の mod ID(両方入っていれば ManaitaPlusGeneral)。どちらもなければ null */
+    @Nullable
+    public static String getActiveModId() {
+        final ModList mods = ModList.get();
+        if (mods == null) {
+            return null;
+        }
+        if (mods.isLoaded(GENERAL_MOD_ID)) {
+            return GENERAL_MOD_ID;
+        }
+        if (mods.isLoaded(LEGACY_MOD_ID)) {
+            return LEGACY_MOD_ID;
+        }
+        return null;
+    }
+
     private static int read(final Kind kind) {
-        // 1. NeoForge が読み込んだ ManaitaPlusGeneral の設定から
+        final String modId = getActiveModId();
+        if (modId == null) {
+            return DEFAULT;
+        }
+        // 1. NeoForge が読み込んだまな板mod の設定から
         try {
-            for (final ModConfig config : ModConfigs.getModConfigs(MANAITA_MOD_ID)) {
+            for (final ModConfig config : ModConfigs.getModConfigs(modId)) {
                 final IConfigSpec.ILoadedConfig loaded = config.getLoadedConfig();
                 if (loaded == null) {
                     continue;
@@ -129,12 +161,12 @@ public final class ManaitaMultiplier {
                 }
             }
         } catch (final RuntimeException e) {
-            warnOnce("ManaitaPlusGeneral の設定を読めませんでした", e);
+            warnOnce(modId + " の設定を読めませんでした", e);
         }
 
-        // 2. 念のため、ManaitaPlusGeneral の設定クラスの値から(3.0 以降と、それより前の置き場所)
+        // 2. 念のため、まな板mod の設定クラスの値から
         Throwable failure = null;
-        for (final String className : CONFIG_CLASSES) {
+        for (final String className : GENERAL_MOD_ID.equals(modId) ? GENERAL_CONFIG_CLASSES : LEGACY_CONFIG_CLASSES) {
             try {
                 final Class<?> configClass = Class.forName(className);
                 final Field field = configClass.getField(kind.configKey);
@@ -146,7 +178,7 @@ public final class ManaitaMultiplier {
                 failure = e;
             }
         }
-        warnOnce("ManaitaPlusGeneral の倍率が見つかりませんでした。初期値の " + DEFAULT + " 倍を使います", failure);
+        warnOnce(modId + " の倍率が見つかりませんでした。初期値の " + DEFAULT + " 倍を使います", failure);
         return DEFAULT;
     }
 

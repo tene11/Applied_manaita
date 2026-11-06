@@ -1,5 +1,5 @@
-gradle.properties の manaita_curse_file を空にしているときだけ、ここに置いた jar を開発環境 (runClient / runServer) で読み込みます。
-ManaitaPlusGeneral (NeoForge 1.21.1 版) の jar を置いてください。jar は Git には入りません(.gitignore で除外)。
-manaita_curse_file にファイルIDを書いたら、ここの jar は消してください(同じmodが2つになって起動できなくなります)。
+ここに置いた jar を開発環境 (runClient / runServer) で読み込みます。jar は Git には入りません(.gitignore で除外)。
+ManaitaPlus Legacy (NeoForge 1.21.1 版) を試すときなどに使ってください。
+gradle.properties の manaita_curse_file で ManaitaPlusGeneral を読み込んでいるときは、ここに ManaitaPlusGeneral の jar を置かないでください(同じmodが2つになって起動できなくなります)。
 
-Only used when manaita_curse_file in gradle.properties is empty: put the ManaitaPlusGeneral jar (NeoForge 1.21.1) here.
+Jars placed here are loaded in the dev environment (e.g. ManaitaPlus Legacy for NeoForge 1.21.1).

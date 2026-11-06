@@ -6,7 +6,7 @@
   ],
   "key": {
     "M": {
-      "item": "manaita_plus_general:block_furnace_manaita"
+      "tag": "appliedmanaita:furnace_manaita"
     },
     "A": {
       "item": "ae2:molecular_assembler"

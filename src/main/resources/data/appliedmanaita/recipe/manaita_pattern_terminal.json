@@ -6,7 +6,7 @@
       "item": "ae2:pattern_encoding_terminal"
     },
     {
-      "item": "manaita_plus_general:block_crafting_manaita"
+      "tag": "appliedmanaita:crafting_manaita"
     }
   ],
   "result": {

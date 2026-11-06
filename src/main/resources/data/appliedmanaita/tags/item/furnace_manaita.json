@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "manaita_plus_general:block_furnace_manaita",
+      "required": false
+    },
+    {
+      "id": "manaita_plus_legacy:block_furnace_manaita",
+      "required": false
+    }
+  ]
+}

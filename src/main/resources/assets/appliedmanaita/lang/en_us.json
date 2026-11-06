@@ -9,5 +9,7 @@
   "tooltip.appliedmanaita.multiplier": "Manaita multiplier: x%s",
   "tooltip.appliedmanaita.furnace_multiplier": "Furnace manaita multiplier: x%s",
   "tooltip.appliedmanaita.brewing_multiplier": "Brewing manaita multiplier: x%s",
-  "chat.appliedmanaita.pattern_terminal_offline": "Needs ME network power and a channel"
+  "chat.appliedmanaita.pattern_terminal_offline": "Needs ME network power and a channel",
+  "appliedmanaita.loading.no_manaita_mod": "Applied Manaita needs a Manaita mod. Please install ManaitaPlusGeneral or ManaitaPlus Legacy.",
+  "appliedmanaita.loading.legacy_needs_iris": "Applied Manaita: ManaitaPlus Legacy is said to need Iris, but Iris is not installed. It may not work correctly."
 }

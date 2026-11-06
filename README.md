@@ -4,8 +4,8 @@
 
 [日本語](#日本語) | [English](#english)
 
-ManaitaPlusGeneral と AE2 (Applied Energistics 2) を連動させる、Minecraft 1.21.1 (NeoForge) 用のアドオンです。
-An addon for Minecraft 1.21.1 (NeoForge) that connects ManaitaPlusGeneral with Applied Energistics 2.
+まな板mod (ManaitaPlusGeneral / ManaitaPlus Legacy) と AE2 (Applied Energistics 2) を連動させる、Minecraft 1.21.1 (NeoForge) 用のアドオンです。
+An addon for Minecraft 1.21.1 (NeoForge) that connects a Manaita mod (ManaitaPlusGeneral / ManaitaPlus Legacy) with Applied Energistics 2.
 
 ---
 
@@ -18,7 +18,9 @@ An addon for Minecraft 1.21.1 (NeoForge) that connects ManaitaPlusGeneral with A
 ### 必要なもの
 - Minecraft 1.21.1 + NeoForge
 - AE2 (Applied Energistics 2) 19.2 以降
-- ManaitaPlusGeneral (NeoForge 1.21.1 版)
+- まな板mod: ManaitaPlusGeneral か ManaitaPlus Legacy のどちらか (NeoForge 1.21.1 版)
+  - 両方入っているときは ManaitaPlusGeneral の倍率を使います
+  - ManaitaPlus Legacy には Iris が必要とされているため、Iris がないと起動時に警告が出ます
 - EMI / JEI(任意。EMI ならまな板パターンターミナルへのレシピ転送に使えます)
 
 ### 追加されるもの
@@ -42,7 +44,7 @@ An addon for Minecraft 1.21.1 (NeoForge) that connects ManaitaPlusGeneral with A
 - まな板パターンを作業台に1個だけ置くと、元の AE2 のパターンに戻せます。
 
 ### 倍率の設定
-倍率は ManaitaPlusGeneral の設定ファイル `config/manaita_plus_general-common.toml` から読みます。
+倍率はまな板mod の設定ファイルから読みます(ManaitaPlusGeneral: `config/manaita_plus_general-common.toml`、ManaitaPlus Legacy: `config/manaita_plus_legacy-common.toml`。設定の名前はどちらも同じ)。
 
 | 設定 | 使うもの |
 |---|---|
@@ -53,7 +55,7 @@ An addon for Minecraft 1.21.1 (NeoForge) that connects ManaitaPlusGeneral with A
 設定を変えると、パターンプロバイダーに入れたままのパターンにもすぐ反映されます。
 
 ### 開発環境
-1. `gradle.properties` の `manaita_curse_file` に、CurseForge にある ManaitaPlusGeneral (NeoForge 1.21.1 版) のファイルIDを書きます(空のままなら、代わりに `libs` フォルダに置いた jar を使います)。必要な Architectury API は自動で入ります。
+1. `gradle.properties` の `manaita_curse_file` に、CurseForge にある ManaitaPlusGeneral (NeoForge 1.21.1 版) のファイルIDを書きます(`libs` フォルダに置いた jar も読み込むので、ManaitaPlus Legacy を試すときはそこに置きます。同じmodを両方に入れないでください)。必要な Architectury API は自動で入ります。
 2. `gradlew runClient` でゲームを起動できます。`gradlew build` で `build/libs` に jar ができます。
 3. 開発環境で動かすレシピ表示mod は `gradle.properties` の `runtime_itemlist_mod` で選べます(emi / jei / both / none)。
 
@@ -68,7 +70,9 @@ Recipes encoded as Manaita Patterns produce output multiplied by the ManaitaPlus
 ### Requirements
 - Minecraft 1.21.1 + NeoForge
 - AE2 (Applied Energistics 2) 19.2 or later
-- ManaitaPlusGeneral (NeoForge 1.21.1)
+- A Manaita mod: ManaitaPlusGeneral or ManaitaPlus Legacy (NeoForge 1.21.1)
+  - If both are installed, ManaitaPlusGeneral's multipliers are used
+  - ManaitaPlus Legacy is said to need Iris; a warning is shown at startup if Iris is missing
 - EMI / JEI (optional; EMI can transfer recipes to the Manaita Pattern Terminal)
 
 ### Contents
@@ -92,12 +96,12 @@ Recipes encoded as Manaita Patterns produce output multiplied by the ManaitaPlus
 - Place a single Manaita Pattern in a crafting grid to turn it back into a normal AE2 pattern.
 
 ### Multipliers
-Read from ManaitaPlusGeneral's config `config/manaita_plus_general-common.toml`:
+Read from the Manaita mod's config (`config/manaita_plus_general-common.toml` or `config/manaita_plus_legacy-common.toml`):
 `crafting_doubling_value` (assembler), `furnace_doubling_value` (smelter), `brewing_doubling_value` (brewer).
 Changes apply immediately, even to patterns already in Pattern Providers.
 
 ### Development
-1. Set `manaita_curse_file` in `gradle.properties` to the CurseForge file ID of ManaitaPlusGeneral (NeoForge 1.21.1), or leave it empty and put the jar into the `libs` folder. Architectury API is added automatically.
+1. Set `manaita_curse_file` in `gradle.properties` to the CurseForge file ID of ManaitaPlusGeneral (NeoForge 1.21.1), Jars in the `libs` folder are also loaded (e.g. to try ManaitaPlus Legacy). Architectury API is added automatically.
 2. Run `gradlew runClient` to start the game, or `gradlew build` to build the jar into `build/libs`.
 3. Choose the recipe viewer for the dev environment with `runtime_itemlist_mod` in `gradle.properties` (emi / jei / both / none).
 
@@ -105,6 +109,7 @@ Changes apply immediately, even to patterns already in Pattern Providers.
 
 ## クレジット / Credits
 - [ManaitaPlusGeneral](https://www.curseforge.com/minecraft/mc-mods/manaita-plus-general) — RealSenPhent, gengyoubo (original Manaita Plus by Rikuto)
+- [ManaitaPlus Legacy](https://www.curseforge.com/minecraft/mc-mods/manaitaplus-legacy) — RealSenPhent (original Manaita Plus by Rikuto)
   このmodの土台になっている「倍化」と、その設定 / The doubling feature and config this addon is built on
 - [Applied Energistics 2](https://github.com/AppliedEnergistics/Applied-Energistics-2) — TeamAppliedEnergistics & contributors
   まな板の機械とまな板パターンターミナルの見た目・画面には、AE2 のモデル・テクスチャ・画面の配置を実行時に読み込んで使っています
