@@ -90,10 +90,6 @@ public class ManaitaInstantProcessorBlockEntity extends AENetworkedBlockEntity
                 .addService(IGridTickable.class, this);
     }
 
-    public ManaitaMultiplier.Kind getKind() {
-        return this.kind;
-    }
-
     private String logName() {
         return this.kind == ManaitaMultiplier.Kind.BREWING ? "まな板分子醸造機" : "まな板分子精錬機";
     }
@@ -139,10 +135,13 @@ public class ManaitaInstantProcessorBlockEntity extends AENetworkedBlockEntity
         for (final GenericStack out : pattern.getOutputs()) {
             this.addPending(out);
         }
-        // 素材は使い切ったので消す。バケツなどの「使った後に残るアイテム」はネットワークへ返す
+        // 素材は使い切ったので消す。
+        // 醸造台は材料の「使った後に残るアイテム」を返すので、まな板分子醸造機ではネットワークへ返す。
+        // かまどは焼く素材の残りを返さない(返すと入れ物が増えてしまう)ので、まな板分子精錬機では返さない。
+        final boolean returnRemainders = this.kind == ManaitaMultiplier.Kind.BREWING;
         for (final KeyCounter list : inputs) {
             for (final var entry : list) {
-                if (entry.getKey() instanceof AEItemKey itemKey && entry.getLongValue() > 0) {
+                if (returnRemainders && entry.getKey() instanceof AEItemKey itemKey && entry.getLongValue() > 0) {
                     final ItemStack one = itemKey.toStack();
                     if (one.hasCraftingRemainingItem()) {
                         final ItemStack remain = one.getCraftingRemainingItem();
@@ -274,14 +273,6 @@ public class ManaitaInstantProcessorBlockEntity extends AENetworkedBlockEntity
                 this.isPowered = now;
                 this.markForUpdate();
             }
-        }
-    }
-
-    @Override
-    public void onReady() {
-        super.onReady();
-        if (!this.pending.isEmpty()) {
-            this.wake(); // 読み込み直後に残っていた出力待ちを出す
         }
     }
 
